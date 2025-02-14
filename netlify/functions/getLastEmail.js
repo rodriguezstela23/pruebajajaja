@@ -97,7 +97,25 @@ function extractLink(text, validLinks) {
   const matches = text.match(urlRegex);
   if (matches) {
     console.log("🔗 Enlaces encontrados en el correo:", matches);
-    return matches.find(url => validLinks.some(valid => url.includes(valid))).replace(/\]$/, "");
+
+    // Primero, buscaremos los enlaces válidos de tipo "account/travel/verify" o "account/update-primary-location"
+    const validLink = matches.find(url =>
+      validLinks.some(valid => url.includes(valid))
+    );
+
+    // Si encontramos un enlace válido de los mencionados
+    if (validLink) {
+      console.log("🔗 Redirigiendo al enlace válido encontrado:", validLink);
+      return validLink.replace(/\]$/, "");
+    }
+
+    // Si no encontramos el enlace válido, buscamos el enlace de "password?g="
+    const fallbackLink = matches.find(url => url.includes("https://www.netflix.com/password?g="));
+
+    if (fallbackLink) {
+      console.log("🔗 Redirigiendo al enlace de fallback encontrado:", fallbackLink);
+      return fallbackLink.replace(/\]$/, "");
+    }
   }
   return null;
 }
