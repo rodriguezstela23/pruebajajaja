@@ -99,17 +99,23 @@ function extractLink(text, validLinks) {
     console.log("🔗 Enlaces encontrados en el correo:", matches);
 
     // Primero, buscaremos los enlaces válidos de tipo "account/travel/verify" o "account/update-primary-location"
+    const preferredLinks = [
+      "https://www.netflix.com/account/travel/verify?nftoken=",
+      "https://www.netflix.com/account/update-primary-location?nftoken="
+    ];
+
+    // Buscamos primero los enlaces prioritarios (travel/verify o update-primary-location)
     const validLink = matches.find(url =>
-      validLinks.some(valid => url.includes(valid))
+      preferredLinks.some(valid => url.includes(valid))
     );
 
-    // Si encontramos un enlace válido de los mencionados
+    // Si encontramos un enlace válido de los mencionados, se redirige a él
     if (validLink) {
       console.log("🔗 Redirigiendo al enlace válido encontrado:", validLink);
       return validLink.replace(/\]$/, "");
     }
 
-    // Si no encontramos el enlace válido, buscamos el enlace de "password?g="
+    // Si no encontramos ninguno de los enlaces prioritarios, buscamos el enlace "password?g="
     const fallbackLink = matches.find(url => url.includes("https://www.netflix.com/password?g="));
 
     if (fallbackLink) {
