@@ -12,6 +12,6 @@ document.getElementById("emailForm").addEventListener("submit", async function(e
     if (data.link) {
         window.location.href = data.link; // Redirige automáticamente
     } else {
-        alert("No se encontró resultado para tu cuenta, vuelve a intentarlo nuevamente.");
+        alert("No se encontró resultado para tu cuenta, vuelve a intentarlo nuevamente.Recuerda que solo tendras 10 minutos despues de solicitado el codigo para poder obtenerlo aqui, no dejes vencer tu codigo.");
     }
 });
