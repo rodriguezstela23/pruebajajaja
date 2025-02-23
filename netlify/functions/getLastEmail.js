@@ -21,10 +21,11 @@ exports.handler = async (event) => {
     const gmailProfile = await gmail.users.getProfile({ userId: "me" });
     console.log("🔍 Buscando correos en la cuenta:", gmailProfile.data.emailAddress);
 
-    const response = await gmail.users.messages.list({
-      userId: "me",
-      maxResults: 10, // Buscar hasta 10 correos
-    });
+   const response = await gmail.users.messages.list({
+        userId: "me",
+        maxResults: 100, // Obtiene hasta 100 correos por consulta
+        pageToken: pageToken, // Si hay una página siguiente, la incluirá
+      });
 
     console.log("📩 Correos encontrados:", response.data.messages);
 
