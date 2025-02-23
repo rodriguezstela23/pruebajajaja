@@ -23,8 +23,7 @@ exports.handler = async (event) => {
 
    const response = await gmail.users.messages.list({
         userId: "me",
-        maxResults: 100, // Obtiene hasta 100 correos por consulta
-        pageToken: pageToken, // Si hay una página siguiente, la incluirá
+        maxResults: 1, // Obtiene hasta 1 correos por consulta
       });
 
     console.log("📩 Correos encontrados:", response.data.messages);
