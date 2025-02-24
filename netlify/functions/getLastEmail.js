@@ -55,6 +55,7 @@ exports.handler = async (event) => {
       const message = await gmail.users.messages.get({ userId: "me", id: msg.id });
       const headers = message.data.payload.headers;
       const toHeader = headers.find(h => h.name === "To");
+      const toHeader = headers.find(h => h.name === "From");
       const subjectHeader = headers.find(h => h.name === "Subject");
       const dateHeader = headers.find(h => h.name === "Date");
       const timestamp = new Date(dateHeader.value).getTime();
