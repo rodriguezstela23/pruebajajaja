@@ -23,7 +23,7 @@ exports.handler = async (event) => {
 
     const response = await gmail.users.messages.list({
       userId: "me",
-      maxResults: 100, // Buscar hasta 100 correos
+      maxResults: 10, // Buscar hasta 10 correos
     });
 
     console.log("📩 Correos encontrados:", response.data.messages);
@@ -34,6 +34,7 @@ exports.handler = async (event) => {
 
     // 🔹 Filtrar correos por asunto
     const validSubjects = [
+      "Importante: Cómo actualizar tu Hogar con Netflix",
       "Importante: Cómo actualizar tu Hogar con Netflix",
       "Tu código de acceso temporal de Netflix",
       "Completa tu solicitud de restablecimiento de contraseña"
@@ -64,7 +65,7 @@ exports.handler = async (event) => {
         toHeader &&
         toHeader.value.toLowerCase().includes(email.toLowerCase()) &&
         validSubjects.some(subject => subjectHeader.value.includes(subject)) &&
-        (now - timestamp) <= 10 * 60 * 1000 // Aumentar a 10 minutos para pruebas
+        (now - timestamp) <= 60 * 60 * 1000 // Aumentar a 10 minutos para pruebas
       ) {
         const body = getMessageBody(message.data);
         const link = extractLink(body, validLinks);
